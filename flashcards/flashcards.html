@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <title>Flashcards</title>
+    </head>
+    <body>
+        <div id="app"></div>
+        <script type="text/babel">
+
+            class CardEditor extends React.Component {
+
+                render () {
+                    return (
+                        <div>
+                            <div>This is the card editor</div>
+                            <hr></hr>
+                            <button onClick={this.props.switchMode}>Go to viewer</button>
+                        </div>
+                    );
+                }
+            }
+
+            class CardViewer extends React.Component {
+
+                render () {
+                    return (
+                        <div>
+                            <div>This is the card viewer</div>
+                            <hr></hr>
+                            <button onClick={this.props.switchMode}>Go to editor</button>
+                        </div>
+                    )
+                }
+            }
+            class App extends React.Component {
+
+                constructor(props) {
+                    super(props);
+                    this.state = {
+                        editor: true
+                    }
+                }
+
+                render () {
+                    if (this.state.editor) {
+                    return (
+                        <CardEditor switchMode={this.switchMode}/>
+                    )} else {
+                        return (
+                        <CardViewer switchMode={this.switchMode}/>
+                    )};
+                     
+                }
+
+                switchMode = () => {
+                    this.setState((state) => ({
+                        editor: !state.editor
+                    }));
+                }
+             
+            }
+
+            ReactDOM.render(<App />, document.querySelector("#app"));
+
+        </script>
+    </body>
+</html>
