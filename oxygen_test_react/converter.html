@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+        <link href="/styles.css" rel="stylesheet" />
+        <title>converter</title>
+    </head>
+    <body>
+        <div id="app"></div>
+        <script type="text/babel">
+
+            class App extends React.Component {
+
+                constructor(props) {
+                    super(props);
+                    this.state = {
+                        convertionType: ["km-miles", "miles-km"],
+                        input: "",
+                        inputUnits: ["km", "miles"],
+                        output: "62.14",
+                        outputUnits: ["km", "miles"]
+                    };
+                }
+
+                render() {
+                    
+                    return (
+                        <div>
+                            <h1>convertion</h1>
+                            <input onChange={this.handleChange} value={this.state.input} />
+                            <p>km</p>
+                            <select 
+                            value={this.state.convertionType}
+                            onChange={e => setConvertionType(e.target.value)}
+                            >
+                                <option value={this.state.convertionType.find(item => item === "km-miles")}>km - miles</option>
+                                <option value={this.state.convertionType.find(item => item === "miles-km")}>miles - km</option>
+                            </select>
+                            <p value={this.state.outputUnits}>62.14</p>
+                            <p>miles</p>
+                            
+                        </div>
+
+                    );
+                }
+
+                handleChange = (event) => {
+                    this.setState({
+                        input: event.target.value
+                    })
+                }
+
+            }
+
+            ReactDOM.render(<App />, document.querySelector("#app"));
+
+        </script>
+    </body>
+</html>
