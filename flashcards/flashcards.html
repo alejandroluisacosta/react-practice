@@ -110,37 +110,41 @@
 
                 render () {
 
-                    const cardSide = this.props.cards.map((card, i) => {
-                        if (this.state.frontFace) {
-                            return (
-                                <div id="card-view" key={i}>
-                                    {card.front}
-                                </div>
-                            );
-                        } else {
-                            return (
-                                <div key={i}>
-                                    {card.back}
-                                </div>
-                            );
-                        }
-                    })
+                    const cardSide = this.props.cards;
 
-                    return (
+                    if (this.state.frontFace) {
+                        return (
                         <div>
                             <h2>Card Viewer</h2>
-                            <div onClick={this.switchSide}>{cardSide}</div>
+                            <div onClick={this.switchSide} id="card-view">{cardSide[0].front}</div> // Change the "0" for "i"?
                             <button onClick={this.newCard}>New card</button>
                             <hr></hr>
                             <button onClick={this.props.switchMode}>Go to editor</button>
                         </div>
                         );
+                    } else {
+                        return (
+                        <div>
+                            <h2>Card Viewer</h2>
+                            <div onClick={this.switchSide} id="card-view">{cardSide[0].back}</div>
+                            <button onClick={this.newCard}>New card</button>
+                            <hr></hr>
+                            <button onClick={this.props.switchMode}>Go to editor</button>
+                        </div>
+                        );
+                    }
                 }
 
                 switchSide = () => {
                     this.setState((state) => ({
                         frontFace: !state.frontFace
                     }));
+                }
+
+                newCard = () => {
+                    this.setState((state) => ({
+
+                    }))
                 }
             }
 
