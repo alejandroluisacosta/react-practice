@@ -39,7 +39,7 @@
                             <tr key={i}>
                                 <td>{card.front}</td>
                                 <td>{card.back}</td>
-                                <td><button>{card.delete}</button></td>
+                                <td><button data-index={i} onClick={this.deleteCard}>{card.delete}</button></td>
                             </tr>
                         );
                     })
@@ -57,8 +57,8 @@
                                 </tbody>
                             </table>
                             <br/>
-                            <input onChange={this.handleChange} placeholder="Front of card" value={this.state.front} />
-                            <input onChange={this.handleChange} placeholder="Back of card" value={this.state.back} />
+                            <input onChange={this.handleChange} name="front" placeholder="Front of card" value={this.state.front} />
+                            <input onChange={this.handleChange} name="back" placeholder="Back of card" value={this.state.back} />
                             <button onClick={this.addCard}>Add card</button>
                             <hr></hr>
                             <button onClick={this.props.switchMode}>Go to viewer</button>
@@ -69,8 +69,22 @@
 
                 handleChange = (event) => {
                     this.setState({
-                        [event.target.name]: event.target.value
+                        [event.target.name]: event.target.value,
+                        
                     });
+                }
+
+                addCard = () => {
+                    this.props.addCard(this.state.front, this.state.back);
+                    this.setState({
+                        front: "",
+                        back: ""
+                    });
+
+                }
+
+                deleteCard = (event) => {
+                    this.props.deleteCard(event.target.dataset.index);
                 }
             }
 
@@ -92,7 +106,7 @@
                     super(props);
                     this.state = {
                         editor: true,
-                        cards: [{front: "test front", back: "test back"}]
+                        cards: []
                     }
                 }
 
@@ -102,6 +116,8 @@
                         <CardEditor 
                             cards={this.state.cards}
                             switchMode={this.switchMode}
+                            addCard={this.addCard}
+                            deleteCard={this.deleteCard}
                         />
                     )} else {
                         return (
@@ -117,6 +133,20 @@
                     this.setState((state) => ({
                         editor: !state.editor
                     }));
+                }
+
+                addCard = (front, back) => {
+                    this.setState((state) => ({
+                        cards: [...state.cards, { front, back }]
+                    }));
+                }
+                
+                deleteCard = (index) => {
+                    this.setState(state => {
+                        const cards = [...state.cards];
+                        cards.splice(index, 1);
+                        return { cards };
+                    });
                 }
              
             }
