@@ -17,6 +17,15 @@
             td, th {
                 padding: 10px;
             }
+
+            #card-view {
+                border: solid 2px;
+                margin: 50px;
+                padding: 50px;
+                text-align: center;
+                font-weight: bold;
+                background-color: rgb(221, 221, 221);
+            }
         </style>
     </head>
     <body>
@@ -35,13 +44,13 @@
 
                 render () {
                     const rows = this.props.cards.map((card, i) => {
-                        return (
-                            <tr key={i}>
-                                <td>{card.front}</td>
-                                <td>{card.back}</td>
-                                <td><button data-index={i} onClick={this.deleteCard}>{card.delete}</button></td>
-                            </tr>
-                        );
+                    return (
+                        <tr key={i}>
+                            <td>{card.front}</td>
+                            <td>{card.back}</td>
+                            <td><button data-index={i} onClick={this.deleteCard}>{card.delete}Delete</button></td>
+                        </tr>
+                    );
                     })
                     return (
                         <div>
@@ -90,23 +99,58 @@
 
             class CardViewer extends React.Component {
 
+                constructor(props) {
+                    super(props);
+                    this.state = {
+                        frontFace: true,
+                        front: "",
+                        back: ""
+                    }
+                }
+
                 render () {
+
+                    const cardSide = this.props.cards.map((card, i) => {
+                        if (this.state.frontFace) {
+                            return (
+                                <div id="card-view" key={i}>
+                                    {card.front}
+                                </div>
+                            );
+                        } else {
+                            return (
+                                <div key={i}>
+                                    {card.back}
+                                </div>
+                            );
+                        }
+                    })
+
                     return (
                         <div>
-                            <div>This is the card viewer</div>
+                            <h2>Card Viewer</h2>
+                            <div onClick={this.switchSide}>{cardSide}</div>
+                            <button onClick={this.newCard}>New card</button>
                             <hr></hr>
                             <button onClick={this.props.switchMode}>Go to editor</button>
                         </div>
-                    )
+                        );
+                }
+
+                switchSide = () => {
+                    this.setState((state) => ({
+                        frontFace: !state.frontFace
+                    }));
                 }
             }
+
             class App extends React.Component {
 
                 constructor(props) {
                     super(props);
                     this.state = {
-                        editor: true,
-                        cards: []
+                        editor: false,
+                        cards: [{ front: 1, back: 2}]
                     }
                 }
 
