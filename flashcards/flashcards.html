@@ -104,20 +104,21 @@
                     this.state = {
                         frontFace: true,
                         front: "",
-                        back: ""
+                        back: "",
+                        index: 0
                     }
                 }
-
+                
                 render () {
-
+                    
                     const cardSide = this.props.cards;
 
                     if (this.state.frontFace) {
                         return (
                         <div>
                             <h2>Card Viewer</h2>
-                            <div onClick={this.switchSide} id="card-view">{cardSide[0].front}</div> // Change the "0" for "i"?
-                            <button onClick={this.newCard}>New card</button>
+                            <div onClick={this.switchSide} id="card-view">{cardSide[this.state.index].front}</div> // Change the "0" for "i"?
+                            <button index={this.state.index} onClick={this.nextCard}>New card</button>
                             <hr></hr>
                             <button onClick={this.props.switchMode}>Go to editor</button>
                         </div>
@@ -126,8 +127,8 @@
                         return (
                         <div>
                             <h2>Card Viewer</h2>
-                            <div onClick={this.switchSide} id="card-view">{cardSide[0].back}</div>
-                            <button onClick={this.newCard}>New card</button>
+                            <div onClick={this.switchSide} id="card-view">{cardSide[this.state.index].back}</div>
+                            <button index={this.state.index} onClick={this.nextCard}>New card</button>
                             <hr></hr>
                             <button onClick={this.props.switchMode}>Go to editor</button>
                         </div>
@@ -141,10 +142,10 @@
                     }));
                 }
 
-                newCard = () => {
-                    this.setState((state) => ({
-
-                    }))
+                nextCard = () => {
+                     this.setState((state) => ({
+                        index: state.index + 1
+                    }));
                 }
             }
 
