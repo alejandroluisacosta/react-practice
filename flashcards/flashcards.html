@@ -68,7 +68,7 @@
                                 </tbody>
                             </table>
                             <br/>
-                            <input ref={input => input && input.focus()} onKeyPress={this.addCard} onChange={this.handleChange} name="front" placeholder="Front of card" value={this.state.front} />
+                            <input value="front" onKeyPress={this.addCard} onChange={this.handleChange} name="front" placeholder="Front of card" value={this.state.front} />
                             <input onKeyPress={this.addCard} onChange={this.handleChange} name="back" placeholder="Back of card" value={this.state.back} />
                             <button id="add-card"onClick={this.addCard}>Add card</button>
                             <hr></hr>
@@ -92,8 +92,8 @@
                             front: "",
                             back: ""
                         })
+                        this.state.value.focus(); // Need to figure out how to reference the intended element
                     };
-
                 }
 
                 deleteCard = (event) => {
