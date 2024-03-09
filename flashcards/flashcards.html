@@ -68,7 +68,7 @@
                                 </tbody>
                             </table>
                             <br/>
-                            <input value="front" onKeyPress={this.addCard} onChange={this.handleChange} name="front" placeholder="Front of card" value={this.state.front} />
+                            <input onKeyPress={this.addCard} onChange={this.handleChange} name="front" placeholder="Front of card" value={this.state.front}/>
                             <input onKeyPress={this.addCard} onChange={this.handleChange} name="back" placeholder="Back of card" value={this.state.back} />
                             <button id="add-card"onClick={this.addCard}>Add card</button>
                             <hr></hr>
@@ -87,11 +87,15 @@
 
                 addCard = (event) => {
                     if (event.key === 'Enter' || event.target.id === 'add-card') {
-                        this.props.addCard(this.state.front, this.state.back);
+                        if (this.state.front && this.state.back) {
+                        this.props.addCard(this.state.front, this.state.back),
                         this.setState({
                             front: "",
                             back: ""
-                        })
+                        })}
+                        else {
+                            alert("Both front and back required");
+                        }
                         this.state.value.focus(); // Need to figure out how to reference the intended element
                     };
                 }
@@ -164,7 +168,7 @@
                     super(props);
                     this.state = {
                         editor: true,
-                        cards: [{ front: 1, back: 2}]
+                        cards: [{ front: 1 + 1, back: 2}]
                     }
                 }
 
